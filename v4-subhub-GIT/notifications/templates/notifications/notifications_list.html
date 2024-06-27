@@ -1,0 +1,151 @@
+<!-- notifications.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <title>Notifications</title>
+</head>
+<body>
+    <table width="100%" cellspacing="0" cellpadding="0" style=" width: 1536px; height: 735px; position: absolute; top: 0; left: 0; box-shadow: 2px 0 5px rgba(0,0,0,0.1); color: white; font-family: Arial, sans-serif;">
+        <tr>
+            <td bgcolor="#2a908f" width="220" valign="top" align="center" >
+                <table width="100%" cellspacing="0" cellpadding="10">
+                    <tr>
+                        <td align="center">
+                          <div style="text-align: center; font-weight: bold; font-size: 30px; margin-bottom: 30px; padding-top: 20px;">
+                            SUBHUB
+                          </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#" style="display: block; padding: 10px; text-decoration: none; color: white; text-align: center;">Dashboard</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#" style="display: block; padding: 10px; text-decoration: none; color: white; text-align: center;">Customers</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#" style="display: block; padding: 10px; text-decoration: none; color: white; text-align: center;">Plans</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#" style="display: block; padding: 10px; text-decoration: none; color: white; text-align: center;">Payments</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#" style="display: block; padding: 10px; text-decoration: none; color: white; text-align: center;">Analytics</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#" style="display: block; padding: 10px; text-decoration: none; color: #2a908f; background-color: #e0e0e0; text-align: center; border-radius: 5px; font-weight: bold;"><b>Notifications</b></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#" style="display: block; padding: 10px; text-decoration: none; color: white; text-align: center;">Settings</a>
+                        </td>
+                    </tr>
+                </table>
+               
+            <td valign="top">
+                <table width="100%" cellspacing="0" cellpadding="10" style="background-color: #e0e0e0; color: black; height: 735px;">
+                    <tr>
+                        <td valign="top">
+                          <table>
+                            <tr>
+                              <td style="padding-right: 150px;">
+                                <div style="text-align: left; font-weight: bold; font-size: 30px; margin-bottom: 30px;  padding-top: 20px;">Hello User</div>
+                              </td>
+                              <td style="padding-right: 650px;">
+                                <div>{% now "d N Y" %}</div>
+                              </td>
+                              <td>
+                                <input type="Search Notifications" placeholder="Search" name="searched">
+                                <button type="submit"><img class="img" src="{% static 'notifications/img/search-2.svg' %}" /></button>
+                              </td>
+                            </tr>
+                          </table>
+                            
+                          <table>
+                            <tr>
+                              <td style="padding-right: 150px;">
+                                <h2>Sent Notifications</h2>
+                              </td>
+                              <td style="padding-right: 150px;">
+                                <table>
+                                  <tr>
+                                    <form method="get" action=""></form>
+                                    <td>
+                                      <form method="GET">
+                                        {% csrf_token %}
+                                        {{ myFilter.form }} <button>Apply</button>
+                                      </form>
+                                    </td>
+                                    </form>
+                                    
+                                  </tr>
+                                </table>  
+                              </td>
+                              <td>
+                                <form method=POST action="{% url 'search_noti' %}">
+                                  {% csrf_token %}
+                                    <input type="Search Notifications" placeholder="Search" name="searched">
+                                    <button type="submit"><img class="img" src="{% static 'notifications/img/search-2.svg' %}" /></button>
+                                </form>
+                              </td>
+                            </tr>
+                          </table>
+                           
+                            {% for notification in notifications %}
+                                              
+                                <table bgcolor="#2a908f" width="100%" cellspacing="0" cellpadding="10" style="margin-bottom: 20px;">
+                                    <tr>
+                                        <td>
+                                            <b>{{ notification.title }}</b>
+                                            <br>Type: {{ notification.type }}
+                                            <br>Sent to: {{ notification.recipient }}
+                                            <br>Date: {{ notification.date_sent }}
+                                            <br>
+                                            <button><a href="{% url 'detail' notification.id %}">View Details</a></button>
+                                            <button><a href="{% url 'update_notification' notification.id %}">Resend</a></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            {% endfor %}
+                            <button><a href="{% url 'notifications' %}">Go Back</a></button>
+                            
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+
+
+  <ul>
+    {% for notification in notifications %}
+      <font style="font-size:xx-large;"><b>Title : {{ notification.title }}</b><br /></font>
+      <font style="font-size: larger;">Type : {{ notification.type }}<br /></font>
+      <font style="font-size: larger;">Sent to: {{ notification.recipient }}<br /></font>
+      <font style="font-size: larger;">Date: {{ notification.date_sent }}<br /></font>
+      <button><a href="{% url 'detail' notification.id %}">View Details</a></button><button><a href="{% url 'update_notification' notification.id %}">Edit</a></button>
+      <h2></h2>
+    {% endfor %}
+  </ul>
+  <button><a href="{% url 'notifications' %}">Go Back</a></button>
+</body>
+</html>
+  
+              
+             
+           
